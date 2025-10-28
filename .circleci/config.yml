@@ -29,9 +29,7 @@ jobs:
       - run:
           name: "Install Dependencies"
           command: |
-            export TERM=xterm-256color
-            export FORCE_COLOR=1
-            npm test --color=always
+            npm ci
       
       # Save dependencies to cache
       - save_cache:
@@ -42,7 +40,10 @@ jobs:
       # Run tests (which includes build step)
       - run:
           name: "Selenium run"
-          command: "npm test --color=always"
+          command: |
+            export TERM=xterm-256color
+            export FORCE_COLOR=1
+            npm test --color=always
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/guides/orchestrate/workflows/ & https://circleci.com/docs/reference/configuration-reference/#workflows
