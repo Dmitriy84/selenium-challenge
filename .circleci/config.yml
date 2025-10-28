@@ -12,12 +12,31 @@ jobs:
       # Specify the version you desire here
       # See: https://circleci.com/developer/images/image/cimg/base
       - image: cimg/node:18.20
-
+    
     # Add steps to the job
     # See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#steps-overview & https://circleci.com/docs/reference/configuration-reference/#steps
     steps:
       # Checkout the code as the first step.
       - checkout
+      
+      # Restore cached dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+      
+      # Install dependencies
+      - run:
+          name: "Install Dependencies"
+          command: "npm ci"
+      
+      # Save dependencies to cache
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+      
+      # Run tests (which includes build step)
       - run:
           name: "Selenium run"
           command: "npm test"
