@@ -28,7 +28,10 @@ jobs:
       # Install dependencies
       - run:
           name: "Install Dependencies"
-          command: "npm ci"
+          command: |
+            export TERM=xterm-256color
+            export FORCE_COLOR=1
+            npm test --color=always
       
       # Save dependencies to cache
       - save_cache:
