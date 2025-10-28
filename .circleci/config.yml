@@ -20,7 +20,7 @@ jobs:
       - checkout
       - run:
           name: "Selenium run"
-          command: "npx jest --verbose"
+          command: "npm test"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/guides/orchestrate/workflows/ & https://circleci.com/docs/reference/configuration-reference/#workflows
